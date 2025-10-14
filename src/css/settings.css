@@ -1,0 +1,128 @@
+/* ========== PAGE LAYOUT ========== */
+.layout-container {
+  display: flex;
+  background-color: #f7f8fa;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-content {
+  flex: 1;
+  padding: 40px 60px;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  margin: 20px;
+  width: 80%;
+  max-width: 900px;
+}
+
+/* ========== HEADER ========== */
+.page-content h2 {
+  font-size: 26px;
+  color: #046307;
+  margin-bottom: 30px;
+  text-align: center;
+  border-bottom: 3px solid #046307;
+  padding-bottom: 10px;
+}
+
+/* ========== FORM ITEMS ========== */
+.settings-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.settings-item label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.settings-item input {
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  background-color: #f9f9f9;
+  color: #333;
+  transition: border 0.3s;
+}
+
+.settings-item input:focus {
+  border-color: #046307;
+  outline: none;
+  background-color: #fff;
+}
+.settings-item select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  outline: none;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.settings-item select:focus {
+  border-color: #007bff;
+}
+
+/* ========== PASSWORD FIELD ========== */
+.password-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.password-toggle-icon {
+  position: absolute;
+  right: 12px;
+  cursor: pointer;
+  color: #555;
+  font-size: 18px;
+}
+
+.password-toggle-icon:hover {
+  color: #046307;
+}
+
+/* ========== SAVE BUTTON ========== */
+.save-settings-btn {
+  display: block;
+  width: 100%;
+  background-color: #046307;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 0;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 25px;
+  transition: background 0.3s ease;
+}
+
+.save-settings-btn:hover {
+  background-color: #034a05;
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 768px) {
+  .page-content {
+    width: 95%;
+    padding: 20px;
+  }
+}

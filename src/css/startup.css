@@ -1,0 +1,402 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* Prevent scroll on the whole page */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden; /* Prevent scroll */
+}
+
+/* Main layout container */
+.StartPage {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  background-color: #f9f9f9;
+  
+  flex-direction: row;
+  overflow: hidden;
+  opacity: 1;
+  transform: scale(1);
+}
+.Left, .Right {
+  min-height: 0;
+  min-width: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.StartPage.reverse {
+  flex-direction: row-reverse;
+  opacity: 1;
+  transform: scale(1.02);
+}
+
+/* LEFT SIDE - Logo + Welcome Message */
+.Left {
+  flex: 1;
+  background-color: #007835;
+  background: radial-gradient(circle at center, #4caf50 50%, #007835 100%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+
+}
+.StartPage.reverse .Left {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+
+.Logo {
+  width: 150px;
+  margin-bottom: 20px;
+}
+
+.Left h2 {
+  font-size: 2rem;
+  text-align: center;
+  max-width: 80%;
+  color: white;
+}
+.Left h2,
+.LoginContainer h3 {
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.InputField,
+.LoginButton,
+.SignUpLink,
+.ForgotPassword a {
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+}
+
+/* RIGHT SIDE - Form */
+.Right {
+  flex: 1;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+
+}
+.StartPage:not(.reverse) .Right {
+  transform: translateX(0);
+}
+.StartPage.reverse .Right {
+  transform: translateX(-30px);
+}
+.LoginContainer {
+  width: 100%;
+  max-width: 350px;
+  background-color: #f9f9f9;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+h3 {
+  font-size: 1.8rem;
+  color: #007835 !important;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.LoginForm {
+  display: flex;
+  flex-direction: column;
+}
+.StartPage,
+.Left,
+.Right,
+.LoginContainer {
+  transition: all 1s cubic-bezier(.9,2.7,.7,4);
+  will-change: transform, opacity;
+}
+/* Input rows with icon + input side-by-side */
+.InputRow {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  transition: border 0.3s, box-shadow 0.3s;
+  position: relative;
+}
+/* Focus effect for the whole row */
+.InputRow:focus-within {
+  border: 1px solid #007835;
+  box-shadow: 0 0 5px rgba(0, 120, 53, 0.5);
+}
+.IconOutside {
+  color: #007835;
+  margin-right: 10px;
+  font-size: 18px;
+  min-width: 24px;
+  text-align: center;
+}
+
+.InputField {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  cursor: text;
+  background-color: transparent;
+  color: #333;
+  caret-color: #007835;
+}
+
+.TogglePasswordIcon {
+  color: #007835;
+  font-size: 16px;
+  cursor: pointer;
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.ForgotPassword{
+  display: flex;
+  justify-content: end;
+  margin-bottom: 20px;
+}
+.ForgotPassword a {
+  color: #007835;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Button */
+.LoginButton {
+  padding: 12px;
+  background-color: #007835 !important;
+  color: white !important;
+  border: none;
+  border-radius: 5px;
+  font-size: large;
+  font-weight: bolder;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.LoginButton:hover {
+  background-color: #005f2c !important;
+}
+.SignUpLink {
+  text-align: center;
+  margin-top: 20px;
+  color: black;
+}
+.SignUpLink a {
+  color: #007835;
+  text-decoration: none;
+  font-weight: bold;
+}
+.SignUpLink a:hover {
+  text-decoration: underline;
+}
+
+/* RESPONSIVE DESIGN */
+
+/* Tablet: Stack vertically, but keep padding and spacing */
+@media (max-width: 991.98px) {
+  .StartPage {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+  .Left, .Right {
+    border-radius: 0;
+    padding: 2rem 1rem;
+    min-height: unset;
+  }
+  .Left {
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 30px;
+  }
+}
+
+/* ...existing code... */
+
+/* Mobile: Logo on top, form below, form has green background */
+@media (max-width: 767.98px) {
+  .StartPage {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    background-color:#f9f9f9;
+    overflow: hidden;
+  }
+    .StartPage,
+  .StartPage.reverse {
+    flex-direction: column !important;
+    transition: none;
+  }
+  .Left {
+    display: none; /* Hide Left on mobile */
+  }
+  .Right {
+    width: 100vw;
+    min-width: 100vw;
+    background: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; 
+    overflow: hidden;
+  }
+  .LoginContainer {
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 24px 10px;
+    max-width: 100%;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  .Logo {
+    width: 100px;
+    margin-bottom: 15px;
+    display: block;
+  }
+  .LoginContainer h3,
+  .LoginContainer label,
+  .LoginContainer .SignUpLink,
+  .LoginContainer .ForgotPassword a {
+    color: #007835 !important;
+  }
+  .InputRow {
+    background-color: #fff;
+    color: #333;
+    padding: 8px;
+  }
+  .IconOutside,
+  .TogglePasswordIcon {
+    color: #007835 !important;
+  }
+  .InputField {
+    color: #333;
+    background: transparent;
+  }
+  .LoginButton {
+    background: #fff;
+    color: #007835;
+    border: none;
+  }
+  .LoginButton:hover {
+    background: #e6e6e6;
+    color: #007835;
+  }
+    .ForgotPasswordContainer {
+    padding: 24px 8px;
+    max-width: 100vw;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+/* Forgot Password Container (inherits LoginContainer styles) */
+.ForgotPasswordContainer {
+  background-color: #f9f9f9;
+  padding: 40px 24px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.ForgotPasswordContainer h3 {
+  font-size: 1.5rem;
+  color: #007835;
+  font-weight: 700;
+  margin-bottom: 18px;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+}
+
+.ForgotPasswordContainer p {
+  color: #333;
+  font-size: 1rem;
+  margin-bottom: 24px;
+}
+
+.ForgotPasswordContainer .InputRow {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  margin-bottom: 18px;
+  padding: 10px;
+  border-radius: 5px;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.ForgotPasswordContainer .IconOutside {
+  color: #007835;
+  margin-right: 10px;
+  font-size: 18px;
+  min-width: 24px;
+  text-align: center;
+}
+
+.ForgotPasswordContainer .InputField {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  background-color: transparent;
+  color: #333;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+}
+
+.ForgotPasswordContainer .LoginButton {
+  padding: 12px;
+  background-color: #007835;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+}
+
+.ForgotPasswordContainer .LoginButton:hover {
+  background-color: #005f28;
+}
+
+.ForgotPasswordContainer .SignUpLink {
+  margin-top: 20px;
+  font-size: 0.95rem;
+}
+
+.ForgotPasswordContainer .SignUpLink a {
+  color: #007835;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.ForgotPasswordContainer .SignUpLink a:hover {
+  text-decoration: underline;
+}

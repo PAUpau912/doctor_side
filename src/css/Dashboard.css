@@ -1,0 +1,142 @@
+body{
+  background-color: #eee;
+}
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* Main content expands full width */
+.main-content {
+  margin-left: 220px;
+  padding: 20px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  flex: 1;
+}
+
+.topbar {
+  margin-bottom: 20px;
+}
+
+/* ✅ Fix for stats row */
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+  margin-top: -40px;
+}
+
+.stat-card {
+  flex: 1;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  margin-bottom: 10px;
+}
+.stat-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #046307; /* matches sidebar green */
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #046307;
+}
+
+/* ✅ Patients & Top Risk Row */
+.patients-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.patients-row .stat-card {
+  flex: 1;
+}
+
+/* Risk list items */
+.risk-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.risk-list li {
+  margin: 10px 0;
+  font-size: 0.95rem;
+}
+
+/* Patient items */
+.patient-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.patient-item:last-child {
+  border-bottom: none;
+}
+
+.age {
+  font-size: 0.85rem;
+  color: #555;
+  margin-left: 5px;
+}
+
+.view-btn {
+  background: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.view-btn:hover {
+  background: #218838;
+}
+
+/* ✅ Responsive for smaller screens */
+@media (max-width: 900px) {
+  .stat-row {
+    flex-direction: column;
+  }
+
+  .patients-row {
+    flex-direction: column;
+  }
+}
+.recent-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.recent-item {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 6px;
+}
+
+.recent-item strong {
+  color: #046307;
+}
+
+.condition {
+  color: #555;
+  font-size: 14px;
+}

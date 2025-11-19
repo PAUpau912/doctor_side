@@ -1,205 +1,241 @@
+/* ==============================
+   SCREEN STYLES
+   ============================== */
 .reports-container {
-  padding: 40px 20px;
+  padding: 25px 20px;
+  background-color: #f5f7fa;
   min-height: 100vh;
-  background: linear-gradient(135deg, #f0f7f4, #e8f0eb);
-  font-family: "Segoe UI", sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #1a1a1a;
 }
 
-/* Title */
 h2 {
-  text-align: center;
   color: #046307;
-  margin-bottom: 30px;
   font-size: 28px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
+  margin-bottom: 20px;
 }
 
-/* Dropdown */
-#patient-select {
-  background-color: #e6f4ea; /* ✅ light green */
-  border: 1px solid #046307;
-  border-radius: 8px;
-  padding: 10px;
-  color: #046307;
-  font-weight: bold;
-  outline: none;
-  transition: 0.3s;
-  margin-bottom: 10px;
+.patients-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
 }
 
-#patient-select:focus {
-  background-color: #d2f2d9; /* medyo darker kapag naka-focus */
-  box-shadow: 0 0 6px rgba(4, 99, 7, 0.4);
-}
-
-.patient-select label {
-  font-weight: bold;
-  color: #034a05;
-  font-size: 15px;
-}
-
-.patient-select select {
-  padding: 10px 14px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  min-width: 240px;
-  font-size: 14px;
-  background-color: white;
-  color: #046307;
-  outline: none;
-  transition: 0.25s ease;
-}
-
-.patient-select select:hover {
-  border-color: #046307;
-}
-
-.patient-select select:focus {
-  border-color: #046307;
-  box-shadow: 0 0 6px rgba(4, 99, 7, 0.35);
-}
-
-/* Report Card */
-.report-card {
+.patient-card {
   background: #fff;
-  padding: 30px;
-  border-radius: 14px;
-  max-width: 780px;
-  margin: 0 auto;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-  animation: fadeIn 0.4s ease-in-out;
-}
-
-.report-card h3 {
+  border-radius: 16px;
+  padding: 15px 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   text-align: center;
-  margin-bottom: 25px;
-  color: #222;
-  font-size: 22px;
-  font-weight: 600;
-  border-bottom: 2px solid #046307;
-  padding-bottom: 12px;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-/* Section Styles */
-.report-section {
-  margin-bottom: 25px;
-  padding: 15px;
-  border-radius: 10px;
-  background: #f9fdf9;
-  border: 1px solid #e0ede0;
-  transition: 0.2s;
+.patient-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
-.report-section:hover {
-  background: #f3fbf3;
-  transform: translateY(-2px);
+.patient-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 2px solid #046307;
 }
 
-.report-section h4 {
-  color: #046307;
-  margin-bottom: 12px;
-  font-size: 17px;
-  font-weight: 600;
-  border-left: 4px solid #046307;
-  padding-left: 8px;
-}
-
-.report-section ul {
-  padding-left: 20px;
-  color: #333;
-  line-height: 1.7;
-  font-size: 14.5px;
-}
-
-/* Doctor's Note */
-.doctor-note {
-  margin-top: 20px;
-}
-
-.doctor-note label {
+.patient-info h3 {
+  margin: 5px 0;
+  font-size: 18px;
   font-weight: 600;
   color: #034a05;
 }
 
-.doctor-note textarea {
-  width: 100%;
-  padding: 14px;
-  border-radius: 10px;
-  border: 1.5px solid #046307;
-  resize: vertical;
+.patient-info p {
+  margin: 2px 0;
   font-size: 14px;
-  min-height: 120px;
-  margin-top: 10px;
-  background-color: white;
-  color: black; 
-  transition: 0.25s;
-}
-
-.doctor-note textarea:focus {
-  border-color: #034a05;
-  box-shadow: 0 0 6px rgba(4, 99, 7, 0.3);
-}
-
-.doctor-note .print-note {
-  display: none;
-  font-style: italic;
-  margin-top: 10px;
   color: #555;
 }
 
-/* Print Button */
+.view-btn,
+.back-btn,
 .print-btn {
-  background: #046307;
-  color: white;
+  background-color: #046307;
+  color: #fff;
   border: none;
-  padding: 12px 20px;
-  border-radius: 10px;
-  font-size: 16px;
+  padding: 10px 16px;
+  border-radius: 12px;
   cursor: pointer;
-  font-weight: 600;
-  transition: 0.3s ease;
-  display: block;
-  margin: 25px auto 0;
-  box-shadow: 0 4px 10px rgba(4, 99, 7, 0.25);
+  margin-top: 12px;
+  font-weight: 500;
+  transition: 0.3s;
 }
 
+.view-btn:hover,
+.back-btn:hover,
 .print-btn:hover {
-  background: #034a05;
-  transform: translateY(-2px);
+  background-color: #034a05;
 }
 
-/* ✅ Print mode */
-@media print {
-  .sidebar,
-  .patient-select,
-  .print-btn,
-  .doctor-note textarea {
-    display: none !important;
-  }
-
-  .reports-container {
-    background: white;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-  }
-
-  .report-card {
-    box-shadow: none;
-    border: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  /* Doctor's Note visible in print */
-  .doctor-note .print-note {
-    display: block !important;
-  }
+/* Patient Report Page */
+.patient-report-view {
+  background: #fff;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
-/* Smooth fade-in animation */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+.report-header {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.report-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #046307;
+}
+
+.report-header div h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #046307;
+}
+
+.report-header div p {
+  margin: 3px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Filter Controls */
+.filter-controls {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.filter-controls label {
+  font-weight: 500;
+  color: #034a05;
+  font-size: 14px;
+}
+
+.filter-controls input,
+.filter-controls select {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid #046307;
+  background-color: #fff;
+  color: #046307;
+  font-size: 14px;
+}
+
+/* Tables */
+.report-sections section {
+  margin-top: 30px;
+  border-radius: 12px;
+  padding: 15px;
+  background: #f9f9f9;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.report-section h3 {
+  cursor: pointer;
+  user-select: none;
+  font-size: 18px;
+  color: #046307;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  display: block;
+  overflow-x: auto;
+}
+
+.report-table th,
+.report-table td {
+  border: 1px solid #ddd;
+  padding: 10px 8px;
+  text-align: center;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.report-table th {
+  background-color: #046307;
+  color: #fff;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.report-table tr:nth-child(even) {
+  background-color: #f1f1f1;
+}
+
+.report-table tr:hover {
+  background-color: #e0ffe0;
+}
+
+/* Doctor Notes */
+.doctor-notes-list {
+  list-style: none;
+  padding: 0;
+}
+
+.note-box {
+  background: #e6ffe6;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* Empty & Error Text */
+.empty,
+.error-text {
+  color: #cc0000;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Search Bar */
+.search-bar {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar input[type="text"] {
+  width: 100%;
+  max-width: 450px;
+  padding: 10px 18px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+  background-color: white;
+  color: black;
+}
+
+.search-bar input[type="text"]:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.4);
 }

@@ -116,6 +116,7 @@ h2 {
   z-index: 999;
 }
 
+<<<<<<< HEAD
 .log-detail-content {
   background-color: #fff;
   padding: 20px;
@@ -213,6 +214,8 @@ h2 {
   color: #555;
 }
 
+=======
+>>>>>>> 5b64f6902748e6870b2ec4e7141bf80d33ea2826
 /* =========================== SIDEBAR (LEFT) =========================== */
 .modal-sidebar {
   flex: 0.32;

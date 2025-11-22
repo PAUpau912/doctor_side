@@ -173,6 +173,8 @@ const Reports: React.FC = () => {
     const ageDiff = Date.now() - birthDate.getTime();
     return Math.floor(ageDiff / (1000 * 60 * 60 * 24 * 365.25));
   };
+<<<<<<< HEAD
+=======
 
   const filterByDate = (logs: any[]) => {
     return logs.filter((log) => {
@@ -182,6 +184,20 @@ const Reports: React.FC = () => {
       return (!start || logDate >= start) && (!end || logDate <= end);
     });
   };
+>>>>>>> 5b64f6902748e6870b2ec4e7141bf80d33ea2826
+
+  const filterByDate = (logs: any[]) => {
+    return logs.filter((log) => {
+      const logDate = new Date(log.created_at);
+      const start = startDate ? new Date(startDate) : null;
+      const end = endDate ? new Date(endDate) : null;
+      return (!start || logDate >= start) && (!end || logDate <= end);
+    });
+  };
+
+  const filteredPatients = patients.filter((p) =>
+    p.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const filteredPatients = patients.filter((p) =>
     p.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -205,6 +221,7 @@ const Reports: React.FC = () => {
             <p className="empty">No patients found.</p>
           ) : (
             <div className="patients-grid">
+<<<<<<< HEAD
               {filteredPatients
                 .sort((a, b) => a.name.localeCompare(b.name))
                 .map((p) => (
@@ -230,6 +247,31 @@ const Reports: React.FC = () => {
                     </button>
                   </div>
                 ))}
+=======
+              {filteredPatients.map((p) => (
+                <div className="patient-card" key={p.id}>
+                  <img
+                    src={p.profile_picture || "src/assets/default-user.png"}
+                    alt="Profile"
+                    className="patient-img"
+                  />
+                  <div className="patient-info">
+                    <h3>{p.name}</h3>
+                    <p>{p.condition || "No condition listed"}</p>
+                    <p>{calculateAge(p.date_of_birth)} years old</p>
+                  </div>
+                  <button
+                    className="view-btn"
+                    onClick={() => {
+                      setSelectedPatient(p);
+                      fetchPatientReports(p.id);
+                    }}
+                  >
+                    View Report
+                  </button>
+                </div>
+              ))}
+>>>>>>> 5b64f6902748e6870b2ec4e7141bf80d33ea2826
             </div>
           )}
         </>
@@ -252,13 +294,21 @@ const Reports: React.FC = () => {
 
           <div className="report-header">
             <img
+<<<<<<< HEAD
               src={selectedPatient.profile_picture || anonymousProfilePic}
+=======
+              src={selectedPatient.profile_picture || "src/assets/default-user.png"}
+>>>>>>> 5b64f6902748e6870b2ec4e7141bf80d33ea2826
               alt="Profile"
               className="report-avatar"
             />
             <div>
               <h2>{selectedPatient.name}</h2>
+<<<<<<< HEAD
               <p>{selectedPatient.condition || "N/A"}</p>
+=======
+              <p>{selectedPatient.condition}</p>
+>>>>>>> 5b64f6902748e6870b2ec4e7141bf80d33ea2826
               <p>
                 {selectedPatient.gender || "N/A"} |{" "}
                 {calculateAge(selectedPatient.date_of_birth)} years old
@@ -308,15 +358,22 @@ const Reports: React.FC = () => {
               <p>⏳ Loading data...</p>
             ) : (
               <>
+<<<<<<< HEAD
                 {/* Insulin Logs */}
+=======
+>>>>>>> 5b64f6902748e6870b2ec4e7141bf80d33ea2826
                 {(filterType === "all" || filterType === "insulin") && (
                   <section className="report-section">
                     <h3
                       onClick={() => toggleSection("insulin")}
                       style={{ cursor: "pointer" }}
                     >
+<<<<<<< HEAD
                       💉 Insulin & Blood Sugar Logs{" "}
                       {collapsedSections.insulin ? "🔽" : "🔼"}
+=======
+                      💉 Insulin & Blood Sugar Logs {collapsedSections.insulin ? "🔽" : "🔼"}
+>>>>>>> 5b64f6902748e6870b2ec4e7141bf80d33ea2826
                     </h3>
                     {!collapsedSections.insulin &&
                       (filterByDate(insulinLogs).length > 0 ? (
@@ -336,6 +393,7 @@ const Reports: React.FC = () => {
                             {filterByDate(insulinLogs).map((log, i) => (
                               <tr key={i}>
                                 <td>{i + 1}</td>
+<<<<<<< HEAD
                                 <td>
                                   {new Date(log.created_at).toLocaleString(
                                     "en-US",
@@ -349,6 +407,9 @@ const Reports: React.FC = () => {
                                     }
                                   )}
                                 </td>
+=======
+                                <td>{new Date(log.created_at).toLocaleString()}</td>
+>>>>>>> 5b64f6902748e6870b2ec4e7141bf80d33ea2826
                                 <td>{log.dosage ?? "—"}</td>
                                 <td>{log.cbg ?? "—"}</td>
                                 <td>{log.cbg_pre_meal ?? "—"}</td>
@@ -364,6 +425,52 @@ const Reports: React.FC = () => {
                   </section>
                 )}
 
+<<<<<<< HEAD
+=======
+                {/* Repeat collapsible pattern for activities, meals, sleep, stress, doctor notes */}
+                {(filterType === "all" || filterType === "activities") && (
+                  <section className="report-section">
+                    <h3
+                      onClick={() => toggleSection("activities")}
+                      style={{ cursor: "pointer" }}
+                    >
+                      🏃 Physical Activities {collapsedSections.activities ? "🔽" : "🔼"}
+                    </h3>
+                    {!collapsedSections.activities &&
+                      (filterByDate(activityLogs).length > 0 ? (
+                        <table className="report-table">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Date</th>
+                              <th>Activity</th>
+                              <th>Duration</th>
+                              <th>Start</th>
+                              <th>End</th>
+                              <th>Notes</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {filterByDate(activityLogs).map((a, i) => (
+                              <tr key={i}>
+                                <td>{i + 1}</td>
+                                <td>{new Date(a.created_at).toLocaleString()}</td>
+                                <td>{a.activity_type}</td>
+                                <td>{a.duration}</td>
+                                <td>{a.start_time ? new Date(a.start_time).toLocaleTimeString() : "—"}</td>
+                                <td>{a.end_time ? new Date(a.end_time).toLocaleTimeString() : "—"}</td>
+                                <td>{a.notes || "—"}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      ) : (
+                        <p>No activity logs found for selected filters.</p>
+                      ))}
+                  </section>
+                )}
+
+>>>>>>> 5b64f6902748e6870b2ec4e7141bf80d33ea2826
                 {/* Meals */}
                 {(filterType === "all" || filterType === "meals") && (
                   <section className="report-section">

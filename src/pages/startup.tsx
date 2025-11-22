@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../css/startup.css";
 import logo from "../assets/images.png";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -13,6 +13,15 @@ const StartPage = () => {
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
+
+    useEffect(() => {
+      const token = localStorage.getItem("doctorToken");
+      const role = localStorage.getItem("user_role");
+
+      if (token && role === "doctor") {
+        navigate("/dashboard", { replace: true });
+      }
+    }, []); // ← EMPTY DEPENDENCY ARRAY
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,6 +52,7 @@ const StartPage = () => {
 
       // ✅ Save session info
       localStorage.setItem("isAuthenticated", "true");
+      localStorage.setItem("doctorToken", data.password); // ← ADD THIS
       localStorage.setItem("user_id", data.id);
       localStorage.setItem("user_role", data.role);
       localStorage.setItem("doctorEmail", data.email); // 🟢 ADD THIS LINE

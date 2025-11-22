@@ -4,17 +4,27 @@ import Dashboard from "../src/pages/dashboard";
 import Patients from '../src/pages/patients';
 import Reports from '../src/pages/reports';
 import Settings from '../src/pages/settings';
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/resetpassword";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<StartPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path= "/patients" element = {<Patients/>} />
-        <Route path= "/reports" element = {<Reports/>} />
-        <Route path= "/settings" element = {<Settings/>} />
+        {/*PROTECTED PAGES */}
 
+        <Route path="/dashboard" element={
+          <PrivateRoute><Dashboard /></PrivateRoute>} />
+        <Route path= "/patients" element = {
+          <PrivateRoute><Patients searchTerm={""}/></PrivateRoute>} />
+        <Route path= "/reports" element = {
+          <PrivateRoute><Reports SearchTerm={""}/></PrivateRoute>} />
+        <Route path= "/settings" element = {
+          <PrivateRoute><Settings/></PrivateRoute>} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
     </Router>
   );

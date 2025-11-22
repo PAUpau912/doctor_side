@@ -1,57 +1,131 @@
-import React, { useState } from 'react';
-import '../css/startup.css';
-import logo from '../assets/images.png';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import supabase from "../supabaseClient";
+import logo from "../assets/images.png";
+import "../css/startup.css";
 
-const ForgotPassword = () => {
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+const ForgotPassword: React.FC = () => {
+  const [email, setEmail] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [step, setStep] = useState(1); // step 1: verify email, step 2: reset password
+  const navigate = useNavigate();
 
-  // Detect mobile view for logo placement
-  const isMobile = window.matchMedia('(max-width: 767.98px)').matches;
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleCheckEmail = async (e: React.FormEvent) => {
     e.preventDefault();
-    setMessage(`Reset password link sent to ${email}`);
-    setEmail('');
+
+    if (!email) {
+      alert("Please enter your email address.");
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from("users")
+      .select("id")
+      .eq("email", email)
+      .maybeSingle();
+
+    if (error || !data) {
+      alert("No account found with that email.");
+      return;
+    }
+
+    localStorage.setItem("reset_user_id", data.id);
+    setStep(2);
+  };
+
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (newPassword !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    const userId = localStorage.getItem("reset_user_id");
+    if (!userId) {
+      alert("Error: user not found. Please try again.");
+      return;
+    }
+
+    const { error } = await supabase
+      .from("users")
+      .update({ password: newPassword })
+      .eq("id", userId);
+
+    if (error) {
+      console.error("Error updating password:", error);
+      alert("Failed to reset password.");
+      return;
+    }
+
+    localStorage.removeItem("reset_user_id");
+    alert("✅ Password has been reset successfully!");
+    navigate("/");
   };
 
   return (
     <div className="StartPage">
-      {/* Left side for desktop/tablet */}
-      {!isMobile && (
-        <div className="Left">
-          <img src={logo} alt="Logo" className="Logo mb-3" />
-          <h2 className="text-center">Forgot your password?</h2>
-        </div>
-      )}
-      {/* Form side */}
       <div className="Right">
         <div className="LoginContainer w-100" style={{ maxWidth: 400 }}>
-          {/* Logo for mobile only */}
-          {isMobile && (
-            <img src={logo} alt="Logo" className="Logo mb-3 d-block mx-auto" />
+          <img src={logo} alt="Logo" className="Logo mb-3 d-block mx-auto" />
+
+          {step === 1 && (
+            <>
+              <h3 className="text-center">Forgot Password</h3>
+              <form onSubmit={handleCheckEmail}>
+                <div className="InputRow mb-3 position-relative">
+                  <i className="fas fa-envelope IconOutside"></i>
+                  <input
+                    type="email"
+                    placeholder="Enter your registered email"
+                    className="InputField form-control ps-5"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                <button type="submit" className="LoginButton btn w-100">
+                  Verify Email
+                </button>
+              </form>
+            </>
           )}
-          <h3 className="text-center">Forgot Password</h3>
-          <form onSubmit={handleSubmit} className="LoginForm">
-            <div className="InputRow mb-3 position-relative">
-              <i className="fas fa-envelope IconOutside"></i>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="InputField form-control ps-5"
-                required
-              />
-            </div>
-            <button type="submit" className="LoginButton btn w-100">
-              Send Reset Link
-            </button>
-          </form>
-          {message && <p className="text-success mt-3 text-center">{message}</p>}
-          <div className="SignUpLink text-center mt-3">
-            <Link to="/">Back to Login</Link>
+
+          {step === 2 && (
+            <>
+              <h3 className="text-center">Reset Password</h3>
+              <form onSubmit={handleResetPassword}>
+                <div className="InputRow mb-3 position-relative">
+                  <i className="fas fa-lock IconOutside"></i>
+                  <input
+                    type="password"
+                    placeholder="New password"
+                    className="InputField form-control ps-5"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                  />
+                </div>
+
+                <div className="InputRow mb-3 position-relative">
+                  <i className="fas fa-lock IconOutside"></i>
+                  <input
+                    type="password"
+                    placeholder="Confirm password"
+                    className="InputField form-control ps-5"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                </div>
+
+                <button type="submit" className="LoginButton btn w-100">
+                  Reset Password
+                </button>
+              </form>
+            </>
+          )}
+
+          <div className="text-center mt-3">
+            <Link to="/">← Back to Login</Link>
           </div>
         </div>
       </div>

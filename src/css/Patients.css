@@ -1,12 +1,14 @@
-/* ===========================
-   PATIENTS MAIN CONTAINER
-=========================== */
-.patients-container {
-  padding: 2rem;
-  color: #1c1c1c;
+/* =========================== GLOBAL STYLES =========================== */
+body {
+  margin: 0;
   font-family: "Poppins", sans-serif;
   background-color: #f5f7f9;
-  min-height: 100vh;
+  color: #1c1c1c;
+}
+
+/* =========================== PATIENTS MAIN CONTAINER =========================== */
+.patients-container {
+  padding: 2rem;
 }
 
 h2 {
@@ -17,9 +19,7 @@ h2 {
   letter-spacing: 0.5px;
 }
 
-/* ===========================
-   PATIENT CARDS GRID
-=========================== */
+/* =========================== PATIENT CARDS GRID =========================== */
 .patients-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -78,9 +78,7 @@ h2 {
   background: #006747;
 }
 
-/* ===========================
-   MODAL BASE STYLES
-=========================== */
+/* =========================== MODAL BASE =========================== */
 .patient-modal {
   position: fixed;
   inset: 0;
@@ -89,8 +87,8 @@ h2 {
   justify-content: center;
   align-items: center;
   z-index: 999;
-  overflow-y: auto; /* ✅ Outer scroll */
-  padding: 30px;
+  overflow-y: auto;
+  padding: 20px;
 }
 
 .modal-content {
@@ -104,10 +102,118 @@ h2 {
   min-height: 85vh;
   position: relative;
 }
+/* Container for log detail modal */
+.log-detail-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
 
-/* ===========================
-   SIDEBAR (LEFT)
-=========================== */
+.log-detail-content {
+  background-color: #fff;
+  padding: 20px;
+  width: 90%;
+  max-width: 900px;
+  max-height: 90%;
+  overflow-y: auto;
+  border-radius: 10px;
+  position: relative;
+}
+
+.close-submodal {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Date filter styles */
+.date-filter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0;
+  flex-wrap: wrap;
+}
+
+.date-filter input[type="date"] {
+  padding: 5px 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  color: black;
+  background-color: white;
+}
+
+.date-filter button {
+  padding: 5px 12px;
+  border: none;
+  background-color: #007b55;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.date-filter button:hover {
+  background-color: #005a40;
+}
+
+/* Meal type filter dropdown */
+.meal-filter-dropdown {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.meal-filter-dropdown select {
+  padding: 5px 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: white;
+  color: black;
+}
+
+/* Table styles */
+.log-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.log-table th, .log-table td {
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.log-table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.log-table tr:hover {
+  background-color: #f0f0f0;
+}
+
+/* Message for empty logs */
+.log-detail-content p {
+  margin-top: 20px;
+  font-style: italic;
+  color: #555;
+}
+
+/* =========================== SIDEBAR (LEFT) =========================== */
 .modal-sidebar {
   flex: 0.32;
   background: #006837;
@@ -118,6 +224,7 @@ h2 {
   align-items: center;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
+  min-width: 250px;
 }
 
 .modal-avatar {
@@ -152,20 +259,16 @@ h2 {
   color: #e9ffe9;
 }
 
-/* ===========================
-   MAIN CONTENT (RIGHT)
-=========================== */
+/* =========================== MAIN CONTENT (RIGHT) =========================== */
 .modal-details {
   flex: 0.68;
   background: #f9fff9;
   padding: 35px;
-  overflow-y: auto; /* ✅ Inner scroll for long content */
+  overflow-y: auto;
   max-height: 85vh;
 }
 
-/* ===========================
-   CHARTS
-=========================== */
+/* =========================== CHARTS =========================== */
 .chart-section {
   text-align: center;
   margin-bottom: 40px;
@@ -199,15 +302,12 @@ h2 {
   height: 370px;
 }
 
-/* ✅ Ensure Chart.js canvas scales properly */
 .chart-card canvas {
   width: 100% !important;
   height: 260px !important;
 }
 
-/* ===========================
-   NOTES SECTION
-=========================== */
+/* =========================== NOTES SECTION =========================== */
 .notes-section {
   margin-top: 40px;
 }
@@ -258,9 +358,7 @@ h2 {
   border-radius: 8px;
 }
 
-/* ===========================
-   CLOSE BUTTON
-=========================== */
+/* =========================== CLOSE BUTTON =========================== */
 .close-btn {
   position: absolute;
   right: 30px;
@@ -277,40 +375,11 @@ h2 {
   color: #006837;
 }
 
-/* ===========================
-   RESPONSIVE DESIGN
-=========================== */
-@media (max-width: 1024px) {
-  .modal-content {
-    flex-direction: column;
-    height: auto;
-  }
-
-  .modal-sidebar {
-    border-radius: 20px 20px 0 0;
-    flex: none;
-    padding: 25px;
-  }
-
-  .modal-details {
-    flex: none;
-    padding: 25px;
-    max-height: none;
-  }
-
-  .chart-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Log Table Modal */
+/* =========================== LOG MODAL =========================== */
 .log-detail-modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0,0,0,0.5);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -326,7 +395,7 @@ h2 {
   max-height: 85vh;
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .log-detail-content h3 {
@@ -345,6 +414,7 @@ h2 {
   cursor: pointer;
   color: #444;
 }
+
 .close-submodal:hover {
   color: #007b55;
 }
@@ -370,4 +440,242 @@ h2 {
 
 .log-table tr:hover {
   background-color: #f5f7f7;
+}
+
+/* =========================== GALLERY / PHOTOS =========================== */
+.gallery-section {
+  margin-top: 20px;
+}
+
+.gallery-section h3 {
+  margin-bottom: 10px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.gallery-item {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.gallery-item img:hover {
+  transform: scale(1.05);
+}
+
+.clickable-photo {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.clickable-photo:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* =========================== FULLSCREEN PHOTO MODAL =========================== */
+.photo-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease;
+}
+
+.photo-modal-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  animation: zoomIn 0.3s ease;
+}
+
+.photo-modal-content img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.close-photo {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: red;
+  border: none;
+  border-radius: 50%;
+  padding: 8px 12px;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* =========================== ANIMATIONS =========================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* =========================== RESPONSIVE DESIGN =========================== */
+
+/* Medium Screens (Tablets / Laptops) */
+@media (max-width: 1024px) {
+  .modal-content {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .modal-sidebar {
+    border-radius: 20px 20px 0 0;
+    flex: none;
+    padding: 25px;
+    width: 100%;
+  }
+
+  .modal-details {
+    flex: none;
+    padding: 25px;
+    max-height: none;
+  }
+
+  .chart-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Small Screens (Mobile) */
+@media (max-width: 768px) {
+  .patients-container {
+    padding: 1rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .patients-grid {
+    gap: 1rem;
+  }
+
+  .patient-card {
+    padding: 1rem 0.8rem;
+  }
+
+  .patient-img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .patient-info h3 {
+    font-size: 1rem;
+  }
+
+  .patient-info p {
+    font-size: 0.8rem;
+  }
+
+  .view-btn {
+    width: 100%;
+  }
+
+  /* STACKED MODAL FOR MOBILE */
+  .modal-content {
+    flex-direction: column;
+    max-width: 95%;
+  }
+
+  .modal-sidebar {
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    flex: none;
+    padding: 20px;
+  }
+
+  .modal-details {
+    width: 100%;
+    flex: none;
+    padding: 20px;
+  }
+
+  .chart-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .notes-section textarea {
+    height: 80px;
+  }
+
+  .close-btn {
+    top: 15px;
+    right: 15px;
+    font-size: 1.4rem;
+  }
+}
+
+/* Extra Small Devices (Phones <480px) */
+@media (max-width: 480px) {
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  .patient-card {
+    padding: 0.8rem 0.6rem;
+  }
+
+  .patient-img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .patient-info h3 {
+    font-size: 0.95rem;
+  }
+
+  .patient-info p {
+    font-size: 0.75rem;
+  }
+
+  .modal-sidebar {
+    padding: 15px;
+  }
+
+  .modal-details {
+    padding: 15px;
+  }
+
+  .chart-card {
+    height: 300px;
+  }
+
+  .notes-section textarea {
+    height: 70px;
+  }
 }

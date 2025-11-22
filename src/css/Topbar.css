@@ -90,3 +90,70 @@
   color: #046307;
   pointer-events: none;
 }
+.topbar-right {
+  display: flex;
+  align-items: center;
+}
+
+/* NOTIFICATIONS */
+.notification-wrapper {
+  position: relative;
+}
+
+.notification-btn {
+  background: none;
+  border: none;
+  font-size: 26px;
+  cursor: pointer;
+  color: #fff;
+  position: relative;
+}
+
+.notif-dot {
+  width: 10px;
+  height: 10px;
+  background: red;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.notif-dropdown {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  width: 280px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  z-index: 200;
+  cursor: pointer;
+}
+
+.notif-item {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+.notif-item.unread {
+  background: rgba(0, 123, 255, 0.12);
+  border-left: 4px solid #007bff;
+  font-weight: 600;
+}
+.notif-item:last-child {
+  border-bottom: none;
+}
+
+.notif-time {
+  font-size: 11px;
+  color: gray;
+}
+
+.empty {
+  text-align: center;
+  padding: 15px;
+  color: gray;
+  font-size: 14px;
+}
+

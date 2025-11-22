@@ -6,56 +6,102 @@ import Patients from "./patients";
 import Reports from "./reports";
 import Settings from "./settings";
 import supabase from "../supabaseClient";
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const Dashboard: React.FC = () => {
   const [activePage, setActivePage] = useState("dashboard");
   const [patients, setPatients] = useState<any[]>([]);
-  const [totalPatients, setTotalPatients] = useState<number>(0);
   const [loading, setLoading] = useState(true);
   const [doctorName, setDoctorName] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
+  const [chartData, setChartData] = useState<any>(null);
 
-  // ✅ Fetch patients assigned to logged-in doctor
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchDashboardData = async () => {
       try {
         setLoading(true);
 
         const doctorId = localStorage.getItem("doctor_id");
         if (!doctorId) {
-          console.warn("⚠️ No logged-in doctor found.");
           setLoading(false);
           return;
         }
 
-        // ✅ Fetch all patients assigned to this doctor (sorted by created_at)
-        const { data: patientsData, error: patientsError } = await supabase
-          .from("patients")
-          .select("id, full_name, age, diabetes_type, risk_level, created_at")
-          .eq("doctor_id", doctorId)
-          .order("created_at", { ascending: false }); // 🔥 sort by latest
-
-        if (patientsError) throw patientsError;
-        setPatients(patientsData || []);
-        setTotalPatients(patientsData?.length || 0);
-
-        // ✅ Fetch doctor name
-        const { data: doctorData, error: doctorError } = await supabase
+        const { data: doctorData } = await supabase
           .from("doctors")
-          .select("name")
+          .select("full_name")
           .eq("id", doctorId)
           .single();
 
-        if (doctorError) throw doctorError;
-        if (doctorData) setDoctorName(doctorData.name);
+        if (doctorData) setDoctorName(doctorData.full_name);
+
+        const { data: patientsData } = await supabase
+          .from("patients")
+          .select("*")
+          .eq("doctor_id", doctorId)
+          .order("created_at", { ascending: false });
+
+        const list = patientsData || [];
+        setPatients(list);
       } catch (err) {
-        console.error("❌ Error fetching dashboard data:", err);
+        console.error("Error fetching dashboard data:", err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    fetchDashboardData();
   }, []);
+
+  // Prepare chart data whenever patients or year changes
+  useEffect(() => {
+    const riskPatients = patients.filter(
+      (p) => p.condition === "Type 1 Diabetes" || p.condition === "Type 2 Diabetes"
+    );
+
+    // Initialize month counts
+    const monthCounts = Array(12).fill(0);
+
+    riskPatients.forEach((p) => {
+      if (!p.created_at) return;
+      const date = new Date(p.created_at);
+      if (date.getFullYear() === selectedYear) {
+        const month = date.getMonth(); // 0-11
+        monthCounts[month]++;
+      }
+    });
+
+    setChartData({
+      labels: [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+      ],
+      datasets: [
+        {
+          label: `Risk Patients (${selectedYear})`,
+          data: monthCounts,
+          backgroundColor: "rgba(255, 99, 132, 0.5)",
+        },
+      ],
+    });
+  }, [patients, selectedYear]);
+
+  // Generate available years from patient data
+  const availableYears = Array.from(
+    new Set(patients.map((p) => new Date(p.created_at).getFullYear()))
+  ).sort((a, b) => b - a);
 
   return (
     <div className="dashboard-container">
@@ -63,94 +109,121 @@ const Dashboard: React.FC = () => {
 
       <div className="main-content">
         <div className="topbar">
-          <Topbar activePage={activePage} />
+          <Topbar activePage={activePage} onSearchChange={setSearchTerm} />
+          {activePage === "patients" && <Patients searchTerm={searchTerm} />}
         </div>
 
         {activePage === "dashboard" && (
-          <>
-            {/* ✅ Statistics */}
-            <div className="stat-row">
-              <div className="stat-card">
-                <h3>Total Patients</h3>
-                <p className="stat-value">
-                  {loading ? "Loading..." : totalPatients}
-                </p>
-              </div>
-              <div className="stat-card">
-                <h3>Critical Alerts</h3>
-                <p className="stat-value">5</p>
-              </div>
-              <div className="stat-card">
-                <h3>New Logs Today</h3>
-                <p className="stat-value">10</p>
-              </div>
-            </div>
-
-            {/* ✅ Patients Section */}
-            <div className="patients-row">
-              {/* 🔹 Top Risk Patients */}
-              <div className="stat-card">
-                <h3>🔥 Top Risk Patients</h3>
+          <div className="dashboard-body">
+            {/* 🔹 Three Boxes Row */}
+            <div className="three-box-row">
+              {/* Type 1 Diabetes */}
+              <div className="dashboard-box type1">
+                <h3>Type 1 Diabetes Patients</h3>
+                <span className="total-count">
+                  Total patients: {patients.filter(p => p.condition === "Type 1 Diabetes").length}
+                </span>
                 {loading ? (
                   <p>Loading...</p>
-                ) : patients.length > 0 ? (
-                  <ul className="risk-list">
+                ) : patients.filter(p => p.condition === "Type 1 Diabetes").length === 0 ? (
+                  <p>No patients found.</p>
+                ) : (
+                  <ul>
                     {patients
-                      .filter((p) => p.risk_level === "High")
-                      .slice(0, 5)
-                      .map((p) => (
-                        <li key={p.id}>
-                          <strong>{p.full_name}</strong> — {p.risk_level} Risk (
-                          {p.diabetes_type || "Unknown"})
+                      .filter(p => p.condition === "Type 1 Diabetes")
+                      .sort((a, b) => a.name.localeCompare(b.name))
+                      .map(p => (
+                        <li key={p.id} className="patient-item">
+                          <span className="patient-name">{p.name}</span>
+                          <span className="patient-info">{p.age} yrs, {p.gender}</span>
                         </li>
                       ))}
                   </ul>
-                ) : (
-                  <p>No high-risk patients yet.</p>
                 )}
               </div>
 
-              {/* 🔹 Recent Patients */}
-              <div className="stat-card">
-                <h3>🩺 Recent Patients</h3>
+              {/* Type 2 Diabetes */}
+              <div className="dashboard-box type2">
+                <h3>Type 2 Diabetes Patients</h3>
+                <span className="total-count">
+                  Total Patients: {patients.filter(p => p.condition === "Type 2 Diabetes").length}
+                </span>
                 {loading ? (
                   <p>Loading...</p>
-                ) : patients.length > 0 ? (
-                  <ul className="recent-list">
+                ) : patients.filter(p => p.condition === "Type 2 Diabetes").length === 0 ? (
+                  <p>No patients found.</p>
+                ) : (
+                  <ul>
                     {patients
-                      .sort(
-                        (a, b) =>
-                          new Date(b.created_at).getTime() -
-                          new Date(a.created_at).getTime()
-                      )
-                      .slice(0, 5)
-                      .map((p) => (
-                        <li key={p.id} className="recent-item">
-                          <strong>{p.full_name}</strong>
-                          <p className="condition">
-                            {p.diabetes_type || "Unknown Type"} •{" "}
-                            {p.risk_level || "Normal"} Risk
-                          </p>
-                          <p className="timestamp">
-                            Added on{" "}
-                            {new Date(p.created_at).toLocaleDateString("en-US", {
-                              month: "short",
-                              day: "numeric",
-                              year: "numeric",
-                            })}
-                          </p>
+                      .filter(p => p.condition === "Type 2 Diabetes")
+                      .sort((a, b) => a.name.localeCompare(b.name))
+                      .map(p => (
+                        <li key={p.id} className="patient-item">
+                          <span className="patient-name">{p.name}</span>
+                          <span className="patient-info">{p.age} yrs, {p.gender}</span>
                         </li>
                       ))}
                   </ul>
+                )}
+              </div>
+
+              {/* Risk Patients */}
+              <div className="dashboard-box reports">
+                <h3>Risk Patients</h3>
+                {loading ? (
+                  <p>Loading...</p>
                 ) : (
-                  <p>No patients available.</p>
+                  <ul>
+                    {patients
+                      .filter(p => p.condition === "Type 1 Diabetes" || p.condition === "Type 2 Diabetes")
+                      .map(p => {
+                        let riskLevel = "";
+                        let riskClass = "";
+                        if (p.risk_score >= 80) {
+                          riskLevel = "High Risk";
+                          riskClass = "risk-high";
+                        } else if (p.risk_score >= 50) {
+                          riskLevel = "Moderate Risk";
+                          riskClass = "risk-moderate";
+                        } else {
+                          riskLevel = "Low Risk";
+                          riskClass = "risk-low";
+                        }
+                        return (
+                          <li key={p.id} className="risk-item">
+                            {p.name} <span className={`risk-badge ${riskClass}`}>{riskLevel}</span>
+                          </li>
+                        );
+                      })}
+                  </ul>
                 )}
               </div>
             </div>
-          </>
+
+            {/* 🔹 Graph Section */}
+            <div className="dashboard-graph">
+              <div className="graph-header">
+                <label>Select Year:</label>
+                <select value={selectedYear} onChange={(e) => setSelectedYear(Number(e.target.value))}>
+                  {availableYears.length === 0 && <option value={new Date().getFullYear()}>{new Date().getFullYear()}</option>}
+                  {availableYears.map((y) => (
+                    <option key={y} value={y}>{y}</option>
+                  ))}
+                </select>
+              </div>
+                {/* Chart Name */}
+              <h2 className="chart-name">Monthly Risk Patients Overview</h2>
+
+              {chartData && <Bar data={chartData} options={{
+                responsive: true,
+                plugins: {
+                  legend: { position: 'top' },
+                },
+              }} />}
+            </div>
+          </div>
         )}
 
-        {activePage === "patients" && <Patients />}
         {activePage === "reports" && <Reports />}
         {activePage === "settings" && <Settings />}
       </div>

@@ -11,25 +11,27 @@
   flex-direction: column;
 }
 
+/* FULL WIDTH PAGE, LEFT-ALIGNED CONTENT */
 .page-content {
   flex: 1;
-  padding: 40px 60px;
-  background-color: #fff;
-  border-radius: 16px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-  margin: 20px;
-  width: 80%;
-  max-width: 900px;
+  padding: 20px 40px; /* space from left */
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  margin: 0 auto; /* center page if needed */
+  width: 100%;
+  max-width: 900px; /* limit width so content doesn't stretch too much */
+  text-align: left;
 }
 
 /* ========== HEADER ========== */
 .page-content h2 {
-  font-size: 26px;
+  font-size: 28px;
   color: #046307;
-  margin-bottom: 30px;
-  text-align: center;
-  border-bottom: 3px solid #046307;
-  padding-bottom: 10px;
+  margin: 10px 0 25px 0;
+  text-align: left;
+  border: none;
+  padding-bottom: 0;
 }
 
 /* ========== FORM ITEMS ========== */
@@ -37,6 +39,7 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+  width: 100%;
 }
 
 .settings-item label {
@@ -45,34 +48,35 @@
   margin-bottom: 8px;
 }
 
-.settings-item input {
-  padding: 10px 14px;
+.settings-item input,
+.settings-item select,
+.settings-item textarea {
+  width: 100%;
+  padding: 12px 16px;
   border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 15px;
-  background-color: #f9f9f9;
+  border-radius: 10px;
+  font-size: 16px;
+  background-color: #fff;
   color: #333;
   transition: border 0.3s;
 }
 
-.settings-item input:focus {
+.settings-item input:focus,
+.settings-item select:focus,
+.settings-item textarea:focus {
   border-color: #046307;
   outline: none;
-  background-color: #fff;
-}
-.settings-item select {
-  width: 100%;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  outline: none;
-  background-color: #f9f9f9;
-  color: #333;
 }
 
-.settings-item select:focus {
-  border-color: #007bff;
+/* ========== NAME FIELDS FULL WIDTH ROW ========== */
+.name-row {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.name-row .settings-item {
+  flex: 1;
 }
 
 /* ========== PASSWORD FIELD ========== */
@@ -107,7 +111,7 @@
   color: white;
   border: none;
   border-radius: 10px;
-  padding: 12px 0;
+  padding: 14px 0;
   font-size: 17px;
   font-weight: 600;
   cursor: pointer;
@@ -119,10 +123,71 @@
   background-color: #034a05;
 }
 
+/* ========== PROFILE PICTURE ========== */
+.profile-picture-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-pic-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #007b55;
+  margin-bottom: 10px;
+}
+
+.upload-btn {
+  background: #007b55;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.upload-btn:hover {
+  background: #009b70;
+}
+
 /* ========== RESPONSIVE DESIGN ========== */
 @media (max-width: 768px) {
   .page-content {
-    width: 95%;
     padding: 20px;
   }
+
+  .name-row {
+    flex-direction: column;
+  }
+}
+/* SETTINGS TABS LEFT ALIGN */
+.settings-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: flex-start; /* align tabs to left */
+}
+
+.settings-tabs button {
+  background-color: #046307;
+  color: white;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+}
+
+.settings-tabs button.active-tab {
+  background-color: #034a05;
 }

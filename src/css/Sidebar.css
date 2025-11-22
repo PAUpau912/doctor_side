@@ -1,3 +1,4 @@
+/* 🔥 Default Sidebar (Desktop) */
 .sidebar {
   width: 220px;
   background-color: white;
@@ -7,11 +8,11 @@
   position: fixed;
   left: 0;
   top: 0;
-  flex-shrink: 0;
-
   display: flex;
   flex-direction: column;
-  justify-content: space-between; 
+  justify-content: space-between;
+  transition: transform 0.3s ease-in-out;
+  z-index: 999;
 }
 
 .sidebar img {
@@ -30,8 +31,6 @@
 }
 
 .sidebar-logo {
-  font-size: 24px;
-  font-weight: bold;
   margin-bottom: 30px;
 }
 
@@ -39,7 +38,7 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  flex: 1; /* 🔽 para i-push pababa yung logout */
+  flex: 1;
 }
 
 .sidebar-menu li {
@@ -62,24 +61,13 @@
   background: #f2f2f2;
 }
 
-span a {
-  text-decoration: none;
-  color: black;
-}
-
 .sidebar-menu li.active {
   background: #046307;
-  border-radius: 8px;
   color: white;
 }
 
-.sidebar-menu li.active span a {
-  color: white;
-}
-
-/* 🔴 Logout Button */
 .sidebar-logout {
-  margin-top: auto; /* siguradong nasa bottom */
+  margin-top: auto;
 }
 
 .logout-btn {
@@ -98,11 +86,38 @@ span a {
   transition: background 0.3s, transform 0.2s;
 }
 
-.logout-btn i {
-  font-size: 18px;
-}
-
 .logout-btn:hover {
   background: #c62828;
   transform: scale(1.05);
+}
+
+/* 🔥 Hamburger Button (Mobile Only) */
+.hamburger-btn {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background: #046307;
+  color: white;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  z-index: 1000;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/* 🔥 MOBILE VIEW */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%); /* Hidden by default */
+  }
+
+  .sidebar.open {
+    transform: translateX(0); /* Slide in */
+  }
+
+  .hamburger-btn {
+    display: block;
+  }
 }

@@ -1,28 +1,32 @@
-body{
+body {
   background-color: #eee;
+  font-family: Arial, sans-serif;
 }
+
+/* --- CONTAINER LAYOUT --- */
 .dashboard-container {
   display: flex;
   height: 100vh;
   width: 100vw;
-  margin: 0;
   overflow-x: hidden;
 }
 
-/* Main content expands full width */
+/* --- MAIN CONTENT --- */
 .main-content {
   margin-left: 220px;
   padding: 20px;
   min-height: 100vh;
-  box-sizing: border-box;
   flex: 1;
+  transition: margin-left 0.3s ease;
 }
 
 .topbar {
   margin-bottom: 20px;
 }
 
-/* ✅ Fix for stats row */
+/* ---------------------------------------------------
+   📌  STAT CARDS (DESKTOP)
+--------------------------------------------------- */
 .stat-row {
   display: flex;
   justify-content: space-between;
@@ -36,107 +40,271 @@ body{
   background: #fff;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
-  margin-bottom: 10px;
 }
 .stat-card h3 {
   font-size: 1.2rem;
   margin-bottom: 10px;
-  color: #046307; /* matches sidebar green */
+  color: #046307;
 }
 
 .stat-value {
   font-size: 2rem;
   font-weight: bold;
-  margin-top: 10px;
   color: #046307;
 }
 
-/* ✅ Patients & Top Risk Row */
-.patients-row {
+/* ---------------------------------------------------
+   📌 RISK CARDS
+--------------------------------------------------- */
+.risk-section {
+  margin-top: 30px;
+}
+
+.risk-cards {
   display: flex;
-  justify-content: space-between;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
-.patients-row .stat-card {
+.risk-card {
   flex: 1;
+  min-width: 220px;
+  border-radius: 16px;
+  padding: 20px;
+  color: white;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Risk list items */
-.risk-list {
+.risk-card.high {
+  background: #e63946;
+}
+.risk-card.moderate {
+  background: #ffb703;
+}
+.risk-card.low {
+  background: #2a9d8f;
+}
+
+.risk-count {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* ---------------------------------------------------
+   📌 DASHBOARD THREE BOXES (Type 1, Type 2, Pending Reports)
+--------------------------------------------------- */
+.three-box-row {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.dashboard-box {
+  flex: 1;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.dashboard-box h3 {
+  margin-bottom: 12px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #046307;
+}
+
+.dashboard-box ul {
   list-style: none;
-  padding: 0;
+  padding-left: 0;
   margin: 0;
 }
 
-.risk-list li {
-  margin: 10px 0;
-  font-size: 0.95rem;
+.dashboard-box li {
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
 }
 
-/* Patient items */
 .patient-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px;
-  margin-bottom: 12px;
+  padding: 6px 0;
   border-bottom: 1px solid #eee;
 }
 
-.patient-item:last-child {
-  border-bottom: none;
-}
-
-.age {
-  font-size: 0.85rem;
-  color: #555;
-  margin-left: 5px;
-}
-
-.view-btn {
-  background: #28a745;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 6px 12px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.view-btn:hover {
-  background: #218838;
-}
-
-/* ✅ Responsive for smaller screens */
-@media (max-width: 900px) {
-  .stat-row {
-    flex-direction: column;
-  }
-
-  .patients-row {
-    flex-direction: column;
-  }
-}
-.recent-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.recent-item {
-  margin-bottom: 10px;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 6px;
-}
-
-.recent-item strong {
+.patient-name {
+  font-weight: 500;
+  font-size: 0.95rem; /* slightly smaller than default */
   color: #046307;
 }
 
-.condition {
+.patient-info {
+  font-size: 0.8rem;
   color: #555;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.total-count {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #555;
+}
+
+/*RISK LEVEL BOX*/
+.risk-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.risk-badge {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.risk-high {
+  background-color: #e63946; /* red */
+}
+
+.risk-moderate {
+  background-color: #ffb703; /* yellow */
+  color: #000;
+}
+
+.risk-low {
+  background-color: #2a9d8f; /* green */
+}
+
+/* Optional: color coding for diabetes types */
+.dashboard-box.type1 {
+  border-left: 5px solid #e63946; /* red */
+}
+
+.dashboard-box.type2 {
+  border-left: 5px solid #2a9d8f; /* green */
+}
+
+.dashboard-box.reports {
+  border-left: 5px solid #ffb703; /* yellow */
+}
+/* ======================= Graph Section ======================= */
+.dashboard-graph {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dashboard-graph .graph-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.dashboard-graph .graph-header label {
+   font-size: 14px;
+  color: #333;
+}
+
+.dashboard-graph select {
+  padding: 6px 10px;
   font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  color: #333;
+}
+
+.dashboard-graph select:focus {
+  outline: none;
+  border-color: #4a90e2;
+}
+
+.dashboard-graph canvas {
+  /* make chart responsive */
+  width: 100% !important;
+  height: 350px !important;
+}
+.chart-name {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+}
+@media (max-width: 768px) {
+  .dashboard-graph {
+    padding: 15px;
+  }
+
+  .dashboard-graph canvas {
+    height: 250px !important;
+  }
+}
+
+/* ---------------------------------------------------
+   📱 RESPONSIVE STYLES (MOBILE / TABLET)
+--------------------------------------------------- */
+
+/* --- MOBILE: shrink main content because sidebar disappears --- */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0; /* Remove space for sidebar */
+    padding: 15px;
+  }
+
+  /* Stack stat cards vertically */
+  .stat-row {
+    flex-direction: column;
+    margin-top: 0;
+  }
+
+  .stat-card {
+    width: 100%;
+  }
+
+  /* Stack risk cards vertically */
+  .risk-cards {
+    flex-direction: column;
+  }
+
+  .risk-card {
+    width: 100%;
+  }
+}
+
+/* --- Tablet (slightly tighter spacing) --- */
+@media (max-width: 1024px) {
+  .main-content {
+    padding: 18px;
+  }
+
+  .stat-row {
+    gap: 15px;
+  }
+
+  .risk-cards {
+    gap: 15px;
+  }
 }
